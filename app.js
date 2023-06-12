@@ -4,9 +4,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 
-
+var passport = require('./middleware/passport');
 var routes = require('./routes/index');
 var database = require('./config/database');
+var { authFactory } = require('./middleware/authHandler');
 
 var app = express();
 
@@ -16,8 +17,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
 
 database.connect();
+
+app.use(authFactory);
 app.use('/api',routes);
 
 

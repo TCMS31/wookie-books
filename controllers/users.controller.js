@@ -1,5 +1,5 @@
 const userService = require("../dal/users.dao");
-const { v4: uuidv4 } = require("uuid");
+const authHelper = require("../utils/authHelper");
 
 module.exports = {
   createUser,
@@ -7,12 +7,26 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
+  login,
 };
 
 async function createUser(req, res) {
   let reqBody = req.body;
   const user = await userService.addUser(reqBody);
-  return res.send(user);
+  let formattedUser = { ...user._doc };
+  delete formattedUser.password;
+  delete formattedUser.salt;
+  delete formattedUser.books;
+  return res.send(formattedUser);
+}
+
+async function login(req, res) {
+  const { user } = req;
+  delete user.password;
+  delete user.salt;
+  const token = authHelper.generateToken(user);
+
+  res.json({ jwt: token });
 }
 
 async function getUsers(req, res) {
@@ -31,14 +45,9 @@ async function getUserById(req, res) {
 async function updateUser(req, res) {
   const reqBody = req.body;
   const userId = req.params.id;
-  
-  try {
-    const updatedUser = await userService.updateUser(userId, reqBody);
-    return res.send(updatedUser);
-  } catch (error) {
-    return res.send({ message: "Unable to update user.!", error });
-  }
 
+  const updatedUser = await userService.updateUser(userId, reqBody);
+  return res.send(updatedUser);
 }
 
 async function deleteUser(req, res) {

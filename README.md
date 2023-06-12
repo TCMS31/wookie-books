@@ -1,45 +1,28 @@
-### Objective
+WookiesBooks
 
-Your assignment is to implement a bookstore REST API using Node and Express.
+### Requirements
 
-### Brief
+For development, you will only need Node.js v16 or above and a node global package, npm, installed in your environement.
 
-Lohgarra, a Wookie from Kashyyyk, has a great idea. She wants to build a marketplace that allows her and her friends to
-self-publish their adventures and sell them online to other Wookies. The profits would then be collected and donated to purchase
-medical supplies for an impoverished Ewok settlement.
+If you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
 
-### Tasks
+    $ npm install npm -g
+    
+#### Configure app
+- copy `.env.exmple` and create `.env`
+- setup mongoose atlas db `mongodb`.
+- set DATABASE_URL in `.env`.
 
--   Implement assignment using:
-    -   Language: **Node**
-    -   Framework: **Express**
--   Implement a REST API returning JSON or XML based on the `Content-Type` header
--   Implement a custom user model with a "author pseudonym" field
--   Implement a book model. Each book should have a title, description, author (your custom user model), cover image and price
-    -   Choose the data type for each field that makes the most sense
--   Provide an endpoint to authenticate with the API using username, password and return a JWT
--   Implement REST endpoints for the `/books` resource
-    -   No authentication required
-    -   Allows only GET (List/Detail) operations
-    -   Make the List resource searchable with query parameters
--   Provide REST resources for the authenticated user
-    -   Implement the typical CRUD operations for this resource
-    -   Implement an endpoint to unpublish a book (DELETE)
--   Implement API tests for all endpoints
+#### Install packages
+    npm i
 
-### Evaluation Criteria
+#### Run express app
+    npm start
 
--   **Node** best practices
--   If you are using a framework make sure best practices are followed for models, configuration and tests
--   Write API tests for all implemented endpoints
--   Make sure that users may only unpublish their own books
--   Bonus: Make sure the user _Darth Vader_ is unable to publish his work on Wookie Books
 
-### CodeSubmit
-
-Please organize, design, test and document your code as if it were
-going into production - then push your changes to the master branch. After you have pushed your code, you may submit the assignment on the assignment page.
-
-All the best and happy coding,
-
-The Crush &amp; Lovely Team
+#### Routes
+- /api/users      (GET, POST)
+- /api/users/:id  (PATCH, DELETE)
+- /api/books      (GET, POST)
+- /api/books/:id  (PATCH, DELETE)
+- /api/auth/login (POST)

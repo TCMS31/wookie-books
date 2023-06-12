@@ -1,30 +1,33 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-const userSchema = mongoose.Schema(
+const bookModel = require("./book.model");
+const User = require("./user.model");
+
+const bookSchema = mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
       max: 40,
     },
-    username: {
-      type: String,
-      required: true,
-      max: 40,
-    },
-    password: {
+    description: {
       type: String,
       required: true,
     },
-    salt: {
-      type: String,
-      required: true,
-    },
-    books: [{
+    author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Book"
-    }]
+      ref: "User",
+    },
+    status: { type: String, enum: ["published", "draft"] , default: "draft"},
+    coverImageUrl: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
@@ -55,5 +58,5 @@ const userSchema = mongoose.Schema(
 //   }
 // });
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+const Book = mongoose.model("Book", bookSchema);
+module.exports = Book;
