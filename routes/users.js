@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var expressAsyncHandler = require('express-async-handler');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+var userController = require('../controllers/users.controller')
+
+
+router.post('/', expressAsyncHandler(userController.createUser));
 
 module.exports = router;
